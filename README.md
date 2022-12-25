@@ -14,14 +14,14 @@ There are 4 hyperparameters that we need to set before training an autoencoder:
 - Code size: number of nodes in the middle layer. Smaller size results in more compression.
 - Number of layers: the autoencoder can be as deep as we like. In the figure above we have 2 layers in both the encoder and decoder, without considering the input and output.
 - Number of nodes per layer: the autoencoder architecture we’re working on is called a stacked autoencoder since the layers are stacked one after another. Usually stacked 
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/autoencoder_architecture.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/autoencoder_architecture.png></div>
 
 ## Stacked Autoencoder
 The stacked auto-encoders is a dense neural network version of Autoencoders as can be seen in the figure given below. It has been majorly used for feature learning. The input vectors are fed to the leftmost Autoencoder. Subsequently, the output representations are passed on to the next layers. The same procedure is repeated until all the auto-encoders are trained. The reconstructed input of the rightmost layer in figure is the output of the Stacked Autoencoders. The unsupervised training can explore huge instances of unlabeled data to prevail a good weight initialization for the neural network than conventional random initialization.
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/stacked_autoencoder_architecture.png></div>
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/sae_equations.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/stacked_autoencoder_architecture.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/sae_equations.png></div>
 Where, X is the input vector, W is the weight vector, b relates bias to every node, H1 and H2 associated to the vector output of 1st and 2nd hidden layer respectively, E related to the output of coding layer, X' is reconstructed input vector
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/cost_function.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/cost_function.png></div>
 Where X is the input vector, X' is the reconstructed input vector, J is the cost function 
 
 ## Batch Normalization
@@ -31,10 +31,10 @@ There are two major problems that exist while training the deep neural network.
 
 Both problems can be solved using batch normalization to some extent. It is achieved through a normalization step that fixes the means and variances in the dense layers. Idea behind usage of normalized training sets with the help of various techniques such as min-max and standard scaler can be applied in batch normalization. In this, hidden layers are trained from the outputs received by activation function of the previous layers which can result into skewed distribution. Hence, to fix such issue normalizing the inputs generated inside the layers is also important so that weights are updated equally without any bias. It does the scaling to output of the layer, specifically performing standardization by considering the statistics such as mean and standard deviation per mini batch. In order to improve the weights which cannot be necessarily correspond to the standard-scaler. It is required to train the two new parameters which are scaling and shifting of the standardized layer inputs as part of the training process
 
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/bn_equations.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/bn_equations.png></div>
 Where, m is the batch size, x is the vector of the batch B, mu is the mean of batch B, sigma_square is the variance, x'(i) is the normalized value with zero mean and unit variance, epsilon is the smoothing term
 
-<div align=center><img src=https://github.com/ghatoleyash/Stacked-Autoencoder-based-IDS/blob/master/scaling%20_shifting_equation.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-IDS/blob/main/scaling%20_shifting_equation.png></div>
 Where, gamma is the scaling parameter, beta is the shifting parameter
 
 
@@ -66,7 +66,7 @@ Output Layer | 118 | 7670
 As the architecture given by the above table, where three hidden layers added which comprises of encoding, coding and decoding layer. ReLU was included as the activation function at hidden layers since, it provided the best results as compared to other functions such as tanh and sigmoid. Reason being, there is confined interval where sigmoid and tanh will have nonzero values. To be specific function's derivatives turned zero as the output of function reaches extreme end of left and right side, which is absurd to make backward pass. In addition, the model includes batch normalization at each of the hidden layers to reduce the problem mentioned earlier.
 Mean squared error was used as error metric and adam optimizer was used while converging the cost function. The output layer was configured to be linear which was equivalent to the number of features given at the input layer. 
 
-<div align=center><img src=https://github.com/ghatoleyash/Deep-AutoEncoder-IDS/blob/master/violin_plot_n.png></div>
+<div align=center><img src=https://github.com/neofinitycode/Stacked-Autoencoder-based-Intrusion-Detection-System/blob/main/violin_plot_n.png></div>
 
 The figure above outlines the effect on gradients with and without batch normalization. Layers 2 and 3 feel the involved normalized gradients as opposed to those without BN. First, weights initialized by the model were retrieved and then fetched after the training weights had been completed. Second, we measured the difference between the initial weights and the final weights so that we could obtain the total weight adjustment. Finally, a mean was determined for each of the nodes to which the gradients had been allocated which eventually gives us an overall gradient distribution for each node. Returning to the figure gradients at layer 2 without batch normalization, there were longer tails resulting in more altered nodes with gradients on the negative side compared to those with positive gradients. Lastly, linear function was worked on the output layer to create a representation replicated close to the input
 
